@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>로그인</title>
+</head>
+<body>
+<h1>회원목록 출력</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>순번</th>
+        <th>회원번호</th>
+        <th>이메일</th>
+        <th>회원명</th>
+        <th>가입일시</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item, status : ${items}" th:object="${item}" class="item" th:classappend="${status.even} ? 'on'">
+        <!--<td th:text="${status.index}"></td>-->
+        <td th:text="${status.count}"></td>
+        <td th:text="${#numbers.formatInteger(item.seq, 3, 'COMMA')}"></td>
+        <td th:text="*{#strings.toUpperCase(email)}"></td>
+        <td th:text="*{name}"></td>
+        <td th:text="*{#temporals.format(regDt, 'yyyy.MM.dd')}"></td>
+    </tr>
+    </tbody>
+</table>
+<th:block th:each="num : ${#numbers.sequence(1, 10, 2)}">
+    <h1 th:text="${num}"></h1>
+</th:block>
+</body>
+</html>
