@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title th:text="#{회원가입}"></title>
+</head>
+<body>
+<h1 th:text="#{회원가입}"></h1>
+<div th:text="${#messages.msg('LOGIN_MSG', requestJoin.name, requestJoin.email)}"></div>
+<a th:href="@{/member/login}" th:text="#{로그인}"></a>
+<a th:href="@{/member/info/{email}/{mobile}(email=${requestJoin.email}, mobile=${requestJoin.mobile})}" th:text="#{회원정보}"></a>
+<a th:href="@{/member/info(email=${requestJoin.email}, mobile=${requestJoin.mobile})}" th:text="#{회원정보2}"></a>
+<th:block th:object="${requestJoin}">
+    <dl>
+        <dt>[[#{이메일}]]</dt>
+        <dd>[[*{email}]]</dd>
+    </dl>
+    <dl>
+        <dt th:text="#{이름}"></dt>
+        <dd th:utext="*{name}">이이름</dd>
+    </dl>
+    <dl>
+        <dt th:text="#{휴대전화번호}"></dt>
+        <dd th:text="*{mobile}">010-2000-1234</dd>
+    </dl>
+</th:block>
+</body>
+</html>

@@ -100,4 +100,17 @@ http://localhost:3000/makeup01/member/info?email=user01@test.org&mobile=010-1000
 - 커맨드 객체 값의 자동 완성
 - 검증실패시 출력 메세지
 
-## 레이아웃 확장 기능 
+- 의존성 추가
+    validation api
+    hibernate validator
+- 검증 메세지와 연동할 경우 th:field - 양식 값을 유지, 검증 실패시에 메세지와 연동...
+- 요청 메서드의 Errors 객체 주입, 반드시 커맨드 객체 바로 다음에 나와야 한다. 커맨드 객체 @Valid
+- #fields
+  - errors('월드명') : 월드에 한정한 검증 실패 메세지 / Bean validation API / rejectValue('필드명', '에러코드');
+  - globalErrors() : 커맨드 객체 그자체 검증 실패 메세지(특정 필드에 한정 X) / reject('필드명');
+    - errors('global')
+
+## 레이아웃 확장 기능
+- th:replace : 반복되는 템플릿을 불러와서 활용
+- th:fragment : 치환될 템플릿 영역
+- 공통 CSS, JS를 페이지별로 별도로 지정하는 부분

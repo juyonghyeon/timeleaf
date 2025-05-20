@@ -1,8 +1,10 @@
 package org.koreait.member.controllers;
 
+import jakarta.validation.Valid;
 import org.koreait.member.entities.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 @Controller
@@ -17,18 +20,18 @@ import java.util.stream.IntStream;
 public class MemberController {
 
     @GetMapping("/join")
-    public String join(@ModelAttribute RequestJoin form) {
+    public String join(@ModelAttribute RequestJoin form, Model model) {
+        commonProcess("join", model);
 
-        form.setEmail("user01@test.org");
-        form.setName("<h1>사용자01</h1>");
-        form.setMobile("010-1000-1000");
 
         return "member/join";
     }
 
     @PostMapping("/join")
-    public String joinPs(RequestJoin form) {
-
+    public String joinPs(@Valid RequestJoin form, Errors errors) {
+        if (errors.hasErrors()) {
+            return "member/join";
+        }
         return "redirect:/member/login";
     }
 
@@ -47,5 +50,14 @@ public class MemberController {
 
         model.addAttribute("items", items);
         return "member/login";
+    }
+
+    private void commonProcess(String mode, Model model) {
+        mode = Objects.requireNonNull(mode,"join");
+        String pageTitle= "";
+        if (mode.equals("join")) {
+            pageTitle = "회원가입";
+        }
+        model.addAttribute(pageTitle);
     }
 }
